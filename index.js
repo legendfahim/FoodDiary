@@ -1,6 +1,16 @@
 // index.js
 
-import { isName, checkStatus, alertMsg, createUser } from "./functions.js";
+import {
+  isName,
+  checkStatus,
+  alertMsg,
+  createUser,
+  setCurrentDate,
+  meal_dt_ck_point,
+  setInitMealDate,
+  getMode,
+  modeCheck,
+} from "./functions.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   const newBtn = document.querySelector(".newBtn");
@@ -17,6 +27,24 @@ window.addEventListener("DOMContentLoaded", () => {
   const alertText = document.querySelector(".alertText");
   const downloadPdf = document.getElementById("downloadPdf");
   const manage = document.querySelector(".manage");
+  const currentDate = document.querySelector("#currentDate");
+  const initMealDate = document.querySelector("#initialMealDate");
+  const mode = document.querySelector("#mode");
+  const logo = document.querySelector("#logo");
+
+  mode.addEventListener("click", () => {
+    if (mode.src.includes("dark.png")) {
+      mode.src = "assets/light.png";
+      document.body.style.backgroundColor = "black";
+      logo.style.filter = "invert(1)";
+      document.cookie = "mode=dark";
+    } else {
+      mode.src = "assets/dark.png";
+      document.body.style.backgroundColor = "white";
+      logo.style.filter = "invert(0)";
+      document.cookie = "mode=light";
+    }
+  });
 
   newBtn.addEventListener("click", () => {
     newBtn.classList.add("hidden");
@@ -31,7 +59,9 @@ window.addEventListener("DOMContentLoaded", () => {
     newBtn.classList.remove("hidden");
     userDetails.classList.add("hidden");
   });
-
+  initMealDate.addEventListener("change", () => {
+    setInitMealDate(initMealDate);
+  });
   okBtn.addEventListener("click", () => {
     const user = { userName: userName.value, number: number.value };
     if (user.userName === "" || user.number === "") {
@@ -89,7 +119,10 @@ window.addEventListener("DOMContentLoaded", () => {
       spanX.className = "flex items-center hover:text-red-500 cursor-pointer";
       spanX.textContent = "X";
       spanX.onclick = () => {
-        localStorage.removeItem(user.key);
+        const confirmation = confirm("Are you sure you want to delete this?");
+        if (confirmation) {
+          localStorage.removeItem(user.key);
+        }
         showUserDetails();
         checkStatus(allUserList, mainBoxHeading, status, downloadPdf);
       };
@@ -118,5 +151,12 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   showUserDetails();
+  //Initial meal date check point
   checkStatus(allUserList, mainBoxHeading, status, downloadPdf);
+  //Initial meal date check point
+  meal_dt_ck_point(initMealDate);
+  //Check mode
+  modeCheck();
+  //Set current date
+  setCurrentDate(currentDate);
 });

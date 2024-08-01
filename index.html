@@ -12,16 +12,25 @@
   </head>
   <body class="relative">
     <!-- Navbar  -->
-    <nav>
+    <nav class="flex justify-between">
       <img
-        class="h-[8rem] w-[10rem] animate-bounce"
+        class="h-[8rem] w-[10rem] animate-bounce invert-1"
         src="/assets/logo.png"
         alt="Logo Here"
+        id="logo"
       />
+      <div class="icon w-10 m-2">
+        <img
+          src="assets/dark.png"
+          alt="Dark Mode"
+          class="cursor-pointer"
+          id="mode"
+        />
+      </div>
     </nav>
     <!-- Main section  -->
     <section
-      class="main p-2 bg-cyan-200 w-[80%] sm:w-[50%] mx-auto rounded-md shadow-md"
+      class="main p-2 bg-white w-[80%] sm:w-[50%] mx-auto rounded-md shadow-md"
     >
       <!-- New user created section  -->
       <div class="new-person sm:w-[70%] w-[80%] mx-auto flex justify-center">
@@ -29,6 +38,7 @@
           class="newBtn bg-violet-500 text-white w-fit text-3xl p-[2px] rounded-md m-2 cursor-pointer hover:bg-violet-600 duration-100"
           >New</span
         >
+
         <div
           class="user-details flex-col w-full sm:w-[80%] justify-between bg-gray-100 p-2 hidden"
         >
@@ -59,6 +69,36 @@
       </div>
       <!-- User management section  -->
       <div class="manage p-2 my-2 h-auto">
+        <div
+          class="dates flex w-full justify-between text-[12px] sm:text-[15px]"
+        >
+          <!-- Initial meal date  -->
+          <div class="init w-1/2">
+            <label
+              for="initialMealDate"
+              class="block text-sm font-medium text-gray-700"
+              >Initial Meal Date:</label
+            >
+            <input
+              id="initialMealDate"
+              type="date"
+              class="mt-1 block p-2 border rounded-md"
+            />
+          </div>
+          <div class="current">
+            <label
+              for="currentDate"
+              class="block text-sm font-medium text-gray-700"
+              >Current Date:</label
+            >
+            <input
+              id="currentDate"
+              type="date"
+              class="mt-1 block p-2 border rounded-md border-none focus:outline-none focus:border-none"
+              readonly
+            />
+          </div>
+        </div>
         <h2 class="mainBoxHeading text-center text-2xl font-bold my-4">
           Total Users List of Meals
         </h2>

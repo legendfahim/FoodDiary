@@ -35,3 +35,53 @@ export function createUser(user) {
   }
   localStorage.setItem(userName, number);
 }
+export function setCurrentDate(element) {
+  const today = new Date().toISOString().split("T")[0];
+  element.value = today;
+}
+
+export function setInitMealDate(element) {
+  const dateValue = element.value;
+  document.cookie = `initial_meal_date=${encodeURIComponent(
+    dateValue
+  )}; path=/`;
+}
+
+export function meal_dt_ck_point(element) {
+  const today = new Date().toISOString().split("T")[0];
+  const cookies = document.cookie;
+  const cookiesArray = cookies.split("; ");
+  const targetCookie = cookiesArray.find((cookie) =>
+    cookie.startsWith("initial_meal_date=")
+  );
+
+  const mealDate = targetCookie ? targetCookie.split("=")[1] : today;
+  element.value = decodeURIComponent(mealDate);
+
+  setInitMealDate(element);
+}
+
+export function getMode() {
+  const cookies = document.cookie;
+  const cookiesArray = cookies.split("; ");
+  const modeCookie = cookiesArray.find((c) => c.startsWith("mode="));
+  if (modeCookie) {
+    return modeCookie.split("=")[1];
+  }
+  return null;
+}
+
+export function modeCheck() {
+  if (getMode() === null) {
+    document.cookie = "mode=light";
+  } else {
+    mode.src = `assets/${getMode()}.png`;
+    if (getMode() === "dark") {
+      document.body.style.backgroundColor = "black";
+      logo.style.filter = "invert(1)";
+    } else {
+      document.body.style.backgroundColor = "white";
+      logo.style.filter = "invert(0)";
+    }
+  }
+}
